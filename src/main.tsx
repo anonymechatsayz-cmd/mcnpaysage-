@@ -39,22 +39,20 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // 3. Handle Forms to show a success state
-    const forms = ['quote-form-hero', 'quote-form-contact'];
-    forms.forEach(formId => {
-        const form = document.getElementById(formId) as HTMLFormElement;
-        if (form) {
-            form.addEventListener('submit', (e) => {
+    const forms = document.querySelectorAll('form');
+    forms.forEach(form => {
+        form.addEventListener('submit', (e) => {
                 e.preventDefault();
                 const btn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
                 if (btn) {
                     const originalText = btn.innerHTML;
-                    btn.innerHTML = 'Envoi en cours...';
+                    btn.innerHTML = 'Envoi...';
                     btn.disabled = true;
                     btn.style.opacity = '0.7';
                     btn.style.cursor = 'not-allowed';
                     
                     setTimeout(() => {
-                        btn.innerHTML = 'Message Envoyé ! ✓';
+                        btn.innerHTML = 'Envoyé ✓';
                         btn.style.backgroundColor = '#1E4620'; // Primary green
                         btn.style.color = '#ffffff';
                         btn.style.opacity = '1';
@@ -70,6 +68,13 @@ document.addEventListener("DOMContentLoaded", () => {
                     }, 800); // Simulate network request
                 }
             });
-        }
+    });
+
+    // 4. Handle dead links for template
+    document.querySelectorAll('a[href="javascript:void(0)"]').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            alert("Cette page sera disponible prochainement !");
+        });
     });
 });
